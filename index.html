@@ -1015,6 +1015,121 @@ footer .f-brand {
 }
 
 /* ==============================
+   Contact
+   ============================== */
+#contact { padding: 6rem 2rem; background: var(--bg-deep); }
+
+.contact-layout {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  margin-top: 2.5rem;
+}
+
+.contact-info {
+  flex: 1;
+}
+
+.contact-info h3 {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  color: var(--ink);
+}
+
+.contact-phone {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.contact-phone .phone-icon {
+  font-size: 1.3rem;
+}
+
+.contact-phone .phone-number {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+.contact-phone .phone-label {
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  margin-top: 0.2rem;
+}
+
+.contact-wechat {
+  font-size: 0.92rem;
+  color: var(--ink-secondary);
+  margin-bottom: 1.5rem;
+  padding: 0.8rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.contact-wechat strong {
+  color: var(--cyan);
+}
+
+.contact-qr {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.qr-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.2rem;
+  text-align: center;
+  transition: all 0.3s;
+  flex: 1;
+  min-width: 160px;
+}
+
+.qr-card:hover {
+  border-color: var(--border-gold);
+  transform: translateY(-4px);
+}
+
+.qr-card img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+  background: #fff;
+  padding: 6px;
+}
+
+.qr-card .qr-label {
+  font-size: 0.82rem;
+  color: var(--ink-secondary);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .contact-layout { flex-direction: column; gap: 2rem; }
+  .contact-qr { justify-content: center; }
+  .qr-card { min-width: 140px; }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .contact-layout { flex-direction: column; gap: 2rem; }
+}
+
+/* ==============================
    Scroll Reveal
    ============================== */
 .reveal {
@@ -1078,7 +1193,7 @@ footer .f-brand {
   .stat-cell:nth-child(2)::after { display: none; }
   .audience-orbit { grid-template-columns: 1fr; }
   .cred-grid { grid-template-columns: 1fr; }
-  .gallery-mosaic { grid-template-columns: 1fr; }
+  .gallery-mosaic { grid-template-columns: repeat(2, 1fr); }
   .hero-actions { flex-direction: column; align-items: center; margin-bottom: 1.5rem; }
   .cta-row { flex-direction: column; align-items: center; }
   .scroll-cue { display: none; }
@@ -1104,8 +1219,9 @@ footer .f-brand {
     <li><a href="#credentials">资质</a></li>
     <li><a href="#services">服务</a></li>
     <li><a href="#gallery">风采</a></li>
+    <li><a href="#contact">联系</a></li>
   </ul>
-  <a href="#philosophy" class="nav-cta">开始对话</a>
+  <a href="#contact" class="nav-cta">联系我</a>
   <div class="nav-toggle" id="navToggle" onclick="toggleNav()">
     <span></span><span></span><span></span>
   </div>
@@ -1124,7 +1240,7 @@ footer .f-brand {
         <span class="hero-title-char">朱</span><span class="hero-title-char">红</span><span class="hero-title-char">印</span>
       </h1>
       <p class="hero-role"><strong>AI培训专家</strong> / 企业AI转型战略顾问</p>
-      <p class="hero-desc">二十余年管理咨询积淀，三年AI深度实战。不做空中楼阁的概念，只交付拿回去就能用的AI落地方案。</p>
+      <p class="hero-desc">三年AI深度实战，二十余年管理咨询积淀。不讲概念，只交付拿回去就能用的AI落地方案——让AI成为你手中实实在在的提效利器。</p>
       <div class="hero-actions">
         <a href="#services" class="btn-gold">探索我的服务 →</a>
         <a href="#about" class="btn-ghost">了解更多</a>
@@ -1161,7 +1277,7 @@ footer .f-brand {
       <div class="stat-desc">AI深度实战</div>
     </div>
     <div class="stat-cell reveal reveal-d2">
-      <div class="stat-num"><span class="num counter" data-target="5">0</span><span class="unit">项</span></div>
+      <div class="stat-num"><span class="num counter" data-target="10">0</span><span class="unit">项+</span></div>
       <div class="stat-desc">权威资质认证</div>
     </div>
     <div class="stat-cell reveal reveal-d3">
@@ -1179,13 +1295,13 @@ footer .f-brand {
     <div class="about-layout">
       <div class="about-narrative">
         <p class="reveal reveal-d2">
-          我是<span class="em">朱红印</span>，你可以叫我红印老师。曾深耕企业管理咨询二十余年，从品牌战略到组织管理，服务过众多企业。三年前，我敏锐地捕捉到AI浪潮的到来，开始系统学习和应用AI技术。
+          我是<span class="em">朱红印</span>，你可以叫我红印老师。深耕企业管理咨询二十余年，从品牌战略到组织管理，服务过众多行业企业。自2022年底开始，系统学习并深度应用国内外前沿AI技术，独立开发各类AI智能体、工作流、提示词上百个。
         </p>
         <p class="reveal reveal-d3">
-          如今，我担任<span class="em">河南恩久AI研究院副院长</span>、首席AI应用架构师，专注于将前沿AI技术转化为企业真正能用的工具和流程。我们是钉钉AI咨询研究院的<span class="em-cyan">河南独家授权商</span>，同时也是钉钉河南授权服务商。
+          现任<span class="em">河南恩久AI研究院副院长</span>、首席AI应用架构师、企业AI转型战略顾问。我们是钉钉AI咨询研究院的<span class="em-cyan">河南独家授权商</span>，同时也是钉钉河南授权服务商。目前已与阿里悟空OPC社区、多所高校建立深度合作。
         </p>
         <p class="reveal reveal-d4">
-          我不做空中楼阁式的"AI概念普及"，而是聚焦于让AI真正帮到每一个人——让AI成为你手中实实在在的提效利器。
+          我专注三件事：AI培训与课程研发、企业轻量级AI落地咨询、AI讲师联盟共建。不讲空中楼阁，只做接地气、能落地的AI实战方案。
         </p>
       </div>
       <div class="about-traits">
@@ -1207,7 +1323,7 @@ footer .f-brand {
         <div class="trait-card reveal reveal-d5">
           <span class="trait-icon">🏛️</span>
           <div class="trait-title">官方认证</div>
-          <div class="trait-desc">钉钉、千问办公、悟空AI三重认证讲师</div>
+          <div class="trait-desc">钉钉、千问办公、悟空AI、AI应用工程师等多重认证</div>
         </div>
       </div>
     </div>
@@ -1224,24 +1340,40 @@ footer .f-brand {
         <div class="cred-icon gold-bg">🏅</div>
         <span class="cred-label">钉钉AI咨询研究院 认证讲师</span>
       </div>
-      <div class="cred-chip reveal reveal-d2">
+      <div class="cred-chip reveal reveal-d1">
         <div class="cred-icon gold-bg">🏅</div>
         <span class="cred-label">千问办公 Qwen Work 认证讲师</span>
       </div>
-      <div class="cred-chip reveal reveal-d3">
+      <div class="cred-chip reveal reveal-d2">
         <div class="cred-icon gold-bg">🏅</div>
         <span class="cred-label">悟空AI部署工程师 认证讲师</span>
       </div>
-      <div class="cred-chip reveal reveal-d4">
+      <div class="cred-chip reveal reveal-d2">
+        <div class="cred-icon gold-bg">🏅</div>
+        <span class="cred-label">钉钉AI应用工程师 认证讲师</span>
+      </div>
+      <div class="cred-chip reveal reveal-d3">
         <div class="cred-icon cyan-bg">⚙️</div>
         <span class="cred-label">钉钉认证 高级AI应用工程师</span>
       </div>
+      <div class="cred-chip reveal reveal-d3">
+        <div class="cred-icon cyan-bg">⚙️</div>
+        <span class="cred-label">悟空AI 部署工程师认证</span>
+      </div>
+      <div class="cred-chip reveal reveal-d4">
+        <div class="cred-icon cyan-bg">⚙️</div>
+        <span class="cred-label">低代码开发工程师（Agent / Skill / 知识库）</span>
+      </div>
+      <div class="cred-chip reveal reveal-d4">
+        <div class="cred-icon cyan-bg">⚙️</div>
+        <span class="cred-label">阿里悟空OPC社区 河南推广大使</span>
+      </div>
       <div class="cred-chip reveal reveal-d5">
-        <div class="cred-icon cyan-bg">📋</div>
+        <div class="cred-icon gold-bg">📋</div>
         <span class="cred-label">资深品牌战略管理咨询顾问</span>
       </div>
-      <div class="cred-chip reveal reveal-d6">
-        <div class="cred-icon cyan-bg">📊</div>
+      <div class="cred-chip reveal reveal-d5">
+        <div class="cred-icon gold-bg">📊</div>
         <span class="cred-label">国企十五五战略规划专家</span>
       </div>
     </div>
@@ -1341,17 +1473,33 @@ footer .f-brand {
         <img src="assets/scene1.jpg" alt="餐饮AI落地实战课">
         <div class="gallery-caption"><span>餐饮AI落地实战课 · 杭州阿里总部</span></div>
       </div>
-      <div class="gallery-tile reveal reveal-d2">
+      <div class="gallery-tile reveal reveal-d1">
         <img src="assets/scene2.jpg" alt="大河速递AI办公提效课">
         <div class="gallery-caption"><span>大河速递AI办公提效实操课</span></div>
       </div>
-      <div class="gallery-tile reveal reveal-d3">
+      <div class="gallery-tile reveal reveal-d2">
         <img src="assets/scene3.jpg" alt="企业AI培训现场">
         <div class="gallery-caption"><span>企业AI培训现场授课</span></div>
       </div>
-      <div class="gallery-tile reveal reveal-d4">
+      <div class="gallery-tile reveal reveal-d2">
         <img src="assets/scene4.jpg" alt="AI应用实操指导">
         <div class="gallery-caption"><span>AI应用实操指导</span></div>
+      </div>
+      <div class="gallery-tile reveal reveal-d3">
+        <img src="assets/scene5.jpg" alt="大屏AI工具演示">
+        <div class="gallery-caption"><span>AI工具大屏实操演示</span></div>
+      </div>
+      <div class="gallery-tile reveal reveal-d3">
+        <img src="assets/scene6.jpg" alt="阿里郑州团队">
+        <div class="gallery-caption"><span>阿里郑州办公室团队合影</span></div>
+      </div>
+      <div class="gallery-tile reveal reveal-d4">
+        <img src="assets/scene7.jpg" alt="阿里南昌团队">
+        <div class="gallery-caption"><span>阿里南昌办公室团队合影</span></div>
+      </div>
+      <div class="gallery-tile reveal reveal-d4">
+        <img src="assets/scene8.jpg" alt="悟空AI实操培训">
+        <div class="gallery-caption"><span>悟空AI应用场景实操培训</span></div>
       </div>
     </div>
   </div>
@@ -1367,8 +1515,44 @@ footer .f-brand {
     </blockquote>
     <p class="philosophy-sub reveal reveal-d2">无论你是想提升个人效率，还是推动企业AI转型，我都可以帮你找到最短路径。</p>
     <div class="cta-row reveal reveal-d3">
-      <a href="#hero" class="btn-gold">开始对话 →</a>
+      <a href="#contact" class="btn-gold">联系我 →</a>
       <a href="#services" class="btn-ghost">查看服务详情</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <span class="section-eyebrow reveal">CONTACT</span>
+    <h2 class="section-heading reveal reveal-d1">联系 <em>方式</em></h2>
+    <div class="contact-layout">
+      <div class="contact-info">
+        <h3 class="reveal reveal-d2">随时与我取得联系</h3>
+        <div class="contact-phone reveal reveal-d2">
+          <span class="phone-icon">📱</span>
+          <div>
+            <div class="phone-number">189 3712 5200</div>
+            <div class="phone-label">手机 / 微信 / 钉钉</div>
+          </div>
+        </div>
+        <div class="contact-wechat reveal reveal-d3">
+          微信号：<strong>18937125200</strong> &nbsp;·&nbsp; 钉钉号：<strong>18937125200</strong>
+        </div>
+        <p class="reveal reveal-d4" style="color: var(--ink-muted); font-size: 0.9rem; line-height: 1.8;">
+          无论是企业AI培训、AI转型咨询，还是AI讲师联盟合作，欢迎随时沟通。扫码添加微信或钉钉，即可开始对话。
+        </p>
+      </div>
+      <div class="contact-qr">
+        <div class="qr-card reveal reveal-d3">
+          <img src="assets/wechat-qr.png" alt="微信二维码">
+          <div class="qr-label">微信扫码添加</div>
+        </div>
+        <div class="qr-card reveal reveal-d4">
+          <img src="assets/dingtalk-qr.png" alt="钉钉二维码">
+          <div class="qr-label">钉钉扫码添加</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
