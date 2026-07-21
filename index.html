@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>朱红印 | AI培训与咨询专家</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-abyss: #050b14;
+  --bg-deep: #081020;
+  --bg-navy: #0a1628;
+  --bg-surface: #0e1e38;
+  --bg-card: rgba(12,28,56,0.6);
+  --bg-card-hover: rgba(16,36,72,0.8);
+  --bg-glass: rgba(255,255,255,0.03);
+  --bg-glass-hover: rgba(255,255,255,0.07);
+  --gold: #e8c45a;
+  --gold-warm: #f5d978;
+  --gold-deep: #c49a30;
+  --gold-muted: rgba(232,196,90,0.15);
+  --cyan: #5cd8e8;
+  --cyan-glow: rgba(92,216,232,0.15);
+  --blue: #4a8fd4;
+  --blue-glow: rgba(74,143,212,0.1);
+  --ink: #f0ece0;
+  --ink-secondary: #8a9ab8;
+  --ink-muted: #4a5a78;
+  --border: rgba(255,255,255,0.06);
+  --border-gold: rgba(232,196,90,0.12);
+  --border-glow: rgba(232,196,90,0.25);
+  --font-sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-serif: 'Noto Serif SC', 'SimSun', serif;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-abyss);
+  color: var(--ink);
+  line-height: 1.8;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: rgba(232,196,90,0.25); color: #fff; }
+
+/* ==============================
+   Atmospheric Canvas
+   ============================== */
+#atmosphere {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.ambient-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(92,216,232,0.03) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 80% 70%, rgba(232,196,90,0.03) 0%, transparent 60%);
+  animation: ambientShift 20s ease-in-out infinite alternate;
+}
+
+@keyframes ambientShift {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+/* ==============================
+   Navigation
+   ============================== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 0 2.5rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+nav.scrolled {
+  background: rgba(5,11,20,0.88);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.nav-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-gold);
+  object-fit: cover;
+  object-position: top center;
+}
+
+.nav-name {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--ink-secondary);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  transition: all 0.3s;
+  position: relative;
+  padding: 0.3rem 0;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%; right: 50%;
+  height: 1.5px;
+  background: var(--gold);
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links a.active { color: var(--gold); }
+.nav-links a:hover::after, .nav-links a.active::after { left: 0; right: 0; }
+
+.nav-cta {
+  padding: 0.5rem 1.3rem;
+  background: rgba(92,216,232,0.1);
+  border: 1px solid rgba(92,216,232,0.2);
+  border-radius: 20px;
+  color: var(--cyan);
+  font-size: 0.82rem;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: all 0.3s;
+}
+
+.nav-cta:hover {
+  background: rgba(92,216,232,0.18);
+  border-color: rgba(92,216,232,0.4);
+  box-shadow: 0 0 20px rgba(92,216,232,0.15);
+}
+
+.nav-toggle { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+.nav-toggle span { width: 22px; height: 1.5px; background: var(--gold); transition: 0.3s; }
+
+/* ==============================
+   Sections
+   ============================== */
+section { position: relative; z-index: 1; padding: 7rem 2rem; }
+
+.container { max-width: 1100px; margin: 0 auto; }
+
+.section-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.section-eyebrow::before {
+  content: '';
+  width: 20px; height: 1px;
+  background: var(--cyan);
+  opacity: 0.5;
+}
+
+.section-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  line-height: 1.3;
+  margin-bottom: 1.5rem;
+  color: var(--ink);
+}
+
+.section-heading em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--gold), var(--gold-warm));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-heading .cyan-em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--cyan), #80e8f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ==============================
+   HERO
+   ============================== */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 64px;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: orbBreathe 8s ease-in-out infinite;
+}
+
+.hero-orb-1 {
+  width: 500px; height: 500px;
+  top: -10%; left: -10%;
+  background: radial-gradient(circle, rgba(92,216,232,0.08), transparent 70%);
+}
+
+.hero-orb-2 {
+  width: 400px; height: 400px;
+  bottom: -5%; right: -5%;
+  background: radial-gradient(circle, rgba(232,196,90,0.06), transparent 70%);
+  animation-delay: 3s;
+}
+
+.hero-orb-3 {
+  width: 300px; height: 300px;
+  top: 30%; right: 20%;
+  background: radial-gradient(circle, rgba(74,143,212,0.05), transparent 70%);
+  animation-delay: 5s;
+}
+
+@keyframes orbBreathe {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+.hero-layout {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+  max-width: 1100px;
+  width: 100%;
+  position: relative;
+}
+
+.hero-identity {
+  flex: 1;
+  opacity: 0;
+  animation: heroTextEnter 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+
+.hero-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.25em;
+  color: var(--cyan);
+  margin-bottom: 1.2rem;
+  opacity: 0.8;
+}
+
+.hero-label::before {
+  content: '';
+  width: 24px; height: 1px;
+  background: var(--cyan);
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(3.2rem, 6vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.02em;
+}
+
+.hero-title-char {
+  display: inline-block;
+  background: linear-gradient(160deg, var(--ink) 20%, var(--gold-warm) 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-role {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  color: var(--ink-secondary);
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+}
+
+.hero-role strong {
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.hero-desc {
+  font-size: 0.95rem;
+  color: var(--ink-muted);
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+  max-width: 460px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  background: linear-gradient(135deg, var(--gold-deep), var(--gold));
+  color: var(--bg-abyss);
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 0.03em;
+}
+
+.btn-gold:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(232,196,90,0.25), 0 0 60px rgba(232,196,90,0.1);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  background: transparent;
+  color: var(--ink-secondary);
+  font-weight: 400;
+  font-size: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+  letter-spacing: 0.03em;
+}
+
+.btn-ghost:hover {
+  border-color: var(--border-gold);
+  color: var(--gold);
+}
+
+.hero-portrait {
+  flex: 0 0 380px;
+  position: relative;
+  opacity: 0;
+  animation: heroPhotoEnter 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+}
+
+.portrait-frame {
+  position: relative;
+  width: 380px;
+  height: 460px;
+  border-radius: 28px;
+  overflow: hidden;
+  animation: portraitFloat 6s ease-in-out infinite;
+}
+
+.portrait-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  padding: 1.5px;
+  background: linear-gradient(160deg, rgba(232,196,90,0.3), rgba(92,216,232,0.15), transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.portrait-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.portrait-glow {
+  position: absolute;
+  inset: -40px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(232,196,90,0.06) 0%, rgba(92,216,232,0.03) 40%, transparent 65%);
+  animation: glowBreathe 5s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes portraitFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes glowBreathe {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+.portrait-badge {
+  position: absolute;
+  bottom: 20px; left: 16px; right: 16px;
+  z-index: 3;
+  background: rgba(5,11,20,0.82);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-gold);
+  border-radius: 14px;
+  padding: 0.7rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.badge-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.5; box-shadow: 0 0 0 0 rgba(232,196,90,0.4); }
+  50% { opacity: 1; box-shadow: 0 0 8px 2px rgba(232,196,90,0.2); }
+}
+
+.badge-text {
+  font-size: 0.78rem;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  opacity: 0;
+  animation: fadeIn 1s ease 2s forwards;
+}
+
+.scroll-cue span {
+  font-size: 0.65rem;
+  color: var(--ink-muted);
+  letter-spacing: 0.3em;
+}
+
+.scroll-cue-line {
+  width: 1px; height: 50px;
+  background: linear-gradient(to bottom, var(--gold-muted), transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-cue-line::after {
+  content: '';
+  position: absolute;
+  top: -100%; left: 0;
+  width: 100%; height: 40%;
+  background: var(--gold);
+  animation: scrollDrop 2.5s ease-in-out infinite;
+}
+
+@keyframes scrollDrop {
+  0% { top: -40%; }
+  100% { top: 140%; }
+}
+
+/* ==============================
+   Stats Band
+   ============================== */
+#stats {
+  padding: 0 2rem;
+  position: relative;
+  z-index: 2;
+  margin-top: -3rem;
+}
+
+.stats-band {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.stat-cell {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.stat-cell:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 20%; bottom: 20%;
+  width: 1px;
+  background: var(--border);
+}
+
+.stat-cell:hover { background: var(--bg-glass-hover); }
+
+.stat-num {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.stat-num .num { color: var(--gold); }
+.stat-num .unit { font-size: 0.5em; color: var(--gold-deep); margin-left: 2px; }
+
+.stat-desc {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ==============================
+   About
+   ============================== */
+#about { padding: 8rem 2rem 6rem; }
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.about-narrative p {
+  color: var(--ink-secondary);
+  font-size: 1rem;
+  line-height: 2;
+  margin-bottom: 1.5rem;
+}
+
+.about-narrative .em { color: var(--gold); font-weight: 500; }
+.about-narrative .em-cyan { color: var(--cyan); font-weight: 500; }
+
+.about-traits {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.trait-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.4rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.trait-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(to bottom, var(--gold), var(--cyan));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.trait-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-gold);
+  transform: translateX(6px);
+}
+
+.trait-card:hover::before { opacity: 1; }
+
+.trait-icon { font-size: 1.3rem; margin-bottom: 0.6rem; display: block; }
+.trait-title { font-size: 0.95rem; font-weight: 600; color: var(--ink); margin-bottom: 0.3rem; }
+.trait-desc { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.6; }
+
+/* ==============================
+   Credentials
+   ============================== */
+#credentials {
+  padding: 5rem 2rem;
+  background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-abyss) 100%);
+}
+
+.cred-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.cred-chip {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.3rem 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.cred-chip::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(232,196,90,0.03) 100%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.cred-chip:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-gold);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+
+.cred-chip:hover::after { opacity: 1; }
+
+.cred-icon {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.cred-icon.gold-bg {
+  background: var(--gold-muted);
+  border: 1px solid var(--border-gold);
+}
+
+.cred-icon.cyan-bg {
+  background: var(--cyan-glow);
+  border: 1px solid rgba(92,216,232,0.15);
+}
+
+.cred-label {
+  font-size: 0.88rem;
+  font-weight: 500;
+  line-height: 1.4;
+  position: relative;
+  z-index: 1;
+}
+
+/* ==============================
+   Services — Floating Islands
+   ============================== */
+#services { padding: 8rem 2rem; position: relative; }
+
+.services-constellation {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.service-island {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: islandFloat 7s ease-in-out infinite;
+}
+
+.service-island:nth-child(1) { animation-delay: 0s; }
+.service-island:nth-child(2) { animation-delay: 2s; }
+.service-island:nth-child(3) { animation-delay: 4s; }
+
+@keyframes islandFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.service-island::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 20%; right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.service-island::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle at 50% 100%, rgba(232,196,90,0.04), transparent 60%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.service-island:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-gold);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 80px rgba(232,196,90,0.04);
+}
+
+.service-island:hover::before { opacity: 1; }
+.service-island:hover::after { opacity: 1; }
+
+.island-icon {
+  width: 52px; height: 52px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, var(--gold-muted), var(--cyan-glow));
+  border: 1px solid var(--border);
+  position: relative;
+  z-index: 1;
+}
+
+.island-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.island-desc {
+  color: var(--ink-secondary);
+  font-size: 0.92rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.island-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  position: relative;
+  z-index: 1;
+}
+
+.island-tag {
+  font-size: 0.72rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 20px;
+  background: rgba(232,196,90,0.06);
+  border: 1px solid var(--border-gold);
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+
+/* ==============================
+   Audience
+   ============================== */
+#audience { padding: 6rem 2rem; background: var(--bg-deep); }
+
+.audience-orbit {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.orbit-node {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.8rem 1.4rem;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.orbit-node::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 30%; right: 30%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.orbit-node:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(92,216,232,0.15);
+  transform: translateY(-5px);
+}
+
+.orbit-node:hover::before { opacity: 1; }
+
+.orbit-icon { font-size: 1.8rem; margin-bottom: 0.8rem; display: block; }
+.orbit-name { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; }
+.orbit-hint { font-size: 0.82rem; color: var(--ink-muted); line-height: 1.5; }
+
+/* ==============================
+   Gallery
+   ============================== */
+#gallery { padding: 8rem 2rem; }
+
+.gallery-mosaic {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.gallery-tile {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  border: 1px solid var(--border);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gallery-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: brightness(0.85) saturate(0.9);
+}
+
+.gallery-tile:hover {
+  transform: scale(1.04) translateY(-4px);
+  border-color: var(--border-gold);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 40px rgba(232,196,90,0.05);
+}
+
+.gallery-tile:hover img {
+  transform: scale(1.1);
+  filter: brightness(1) saturate(1);
+}
+
+.gallery-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 2rem 1rem 1rem;
+  background: linear-gradient(to top, rgba(5,11,20,0.92), transparent);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.4s;
+}
+
+.gallery-tile:hover .gallery-caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery-caption span {
+  font-size: 0.82rem;
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+/* ==============================
+   Philosophy / CTA
+   ============================== */
+#philosophy {
+  padding: 8rem 2rem 6rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.philosophy-orb {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,196,90,0.04), rgba(92,216,232,0.02) 50%, transparent 70%);
+  animation: orbBreathe 10s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.philosophy-quote {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.6;
+  max-width: 760px;
+  margin: 0 auto 2rem;
+  position: relative;
+}
+
+.philosophy-quote::before {
+  content: '\201C';
+  position: absolute;
+  top: -2.5rem; left: -1rem;
+  font-size: 5rem;
+  font-family: var(--font-serif);
+  color: var(--gold-muted);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.philosophy-quote .quote-text {
+  background: linear-gradient(135deg, var(--ink) 20%, var(--gold-warm) 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.philosophy-sub {
+  font-size: 1rem;
+  color: var(--ink-muted);
+  margin-bottom: 3rem;
+  line-height: 1.8;
+}
+
+.cta-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ==============================
+   Footer
+   ============================== */
+footer {
+  padding: 2.5rem 2rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+footer p {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  letter-spacing: 0.05em;
+}
+
+footer .f-brand {
+  color: var(--gold);
+  font-family: var(--font-serif);
+  font-weight: 700;
+}
+
+/* ==============================
+   Scroll Reveal
+   ============================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; }
+.reveal-d5 { transition-delay: 0.5s; }
+.reveal-d6 { transition-delay: 0.6s; }
+
+/* ==============================
+   Keyframes
+   ============================== */
+@keyframes heroTextEnter {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroPhotoEnter {
+  from { opacity: 0; transform: translateX(50px) scale(0.95); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* ==============================
+   Responsive
+   ============================== */
+@media (max-width: 1024px) {
+  .hero-layout { flex-direction: column-reverse; text-align: center; gap: 3rem; }
+  .hero-portrait { flex: 0 0 auto; }
+  .portrait-frame { width: 280px; height: 340px; margin: 0 auto; }
+  .hero-actions { justify-content: center; }
+  .hero-desc { margin: 0 auto 2.5rem; }
+  .about-layout { grid-template-columns: 1fr; gap: 3rem; }
+  .services-constellation { grid-template-columns: 1fr; }
+  .gallery-mosaic { grid-template-columns: repeat(2, 1fr); }
+  .cred-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  section { padding: 4rem 1.2rem; }
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+  .nav-toggle { display: flex; }
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: absolute; top: 64px; left: 0; right: 0;
+    background: rgba(5,11,20,0.96);
+    backdrop-filter: blur(24px);
+    padding: 2rem; gap: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .stats-band { grid-template-columns: repeat(2, 1fr); }
+  .stat-cell:nth-child(2)::after { display: none; }
+  .audience-orbit { grid-template-columns: 1fr; }
+  .cred-grid { grid-template-columns: 1fr; }
+  .gallery-mosaic { grid-template-columns: 1fr; }
+  .hero-actions { flex-direction: column; align-items: center; margin-bottom: 1.5rem; }
+  .cta-row { flex-direction: column; align-items: center; }
+  .scroll-cue { display: none; }
+  #hero { padding-bottom: 3rem; }
+  .hero-identity { padding-bottom: 1rem; }
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="atmosphere"></canvas>
+<div class="ambient-overlay"></div>
+
+<!-- NAVIGATION -->
+<nav id="navbar">
+  <div class="nav-brand">
+    <img class="nav-avatar" src="assets/profile.png" alt="朱红印">
+    <span class="nav-name">朱红印</span>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">关于</a></li>
+    <li><a href="#credentials">资质</a></li>
+    <li><a href="#services">服务</a></li>
+    <li><a href="#gallery">风采</a></li>
+  </ul>
+  <a href="#philosophy" class="nav-cta">开始对话</a>
+  <div class="nav-toggle" id="navToggle" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+
+  <div class="hero-layout">
+    <div class="hero-identity">
+      <span class="hero-label">HELLO WORLD</span>
+      <h1 class="hero-title">
+        <span class="hero-title-char">朱</span><span class="hero-title-char">红</span><span class="hero-title-char">印</span>
+      </h1>
+      <p class="hero-role"><strong>AI培训专家</strong> / 企业AI转型战略顾问</p>
+      <p class="hero-desc">二十余年管理咨询积淀，三年AI深度实战。不做空中楼阁的概念，只交付拿回去就能用的AI落地方案。</p>
+      <div class="hero-actions">
+        <a href="#services" class="btn-gold">探索我的服务 →</a>
+        <a href="#about" class="btn-ghost">了解更多</a>
+      </div>
+    </div>
+
+    <div class="hero-portrait">
+      <div class="portrait-glow"></div>
+      <div class="portrait-frame">
+        <img src="assets/profile.png" alt="朱红印 - AI培训与咨询专家">
+        <div class="portrait-badge">
+          <span class="badge-dot"></span>
+          <span class="badge-text">钉钉AI咨询研究院 · 河南独家授权</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <span>SCROLL</span>
+    <div class="scroll-cue-line"></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-band">
+    <div class="stat-cell reveal">
+      <div class="stat-num"><span class="num counter" data-target="20">0</span><span class="unit">年+</span></div>
+      <div class="stat-desc">管理咨询经验</div>
+    </div>
+    <div class="stat-cell reveal reveal-d1">
+      <div class="stat-num"><span class="num counter" data-target="3">0</span><span class="unit">年+</span></div>
+      <div class="stat-desc">AI深度实战</div>
+    </div>
+    <div class="stat-cell reveal reveal-d2">
+      <div class="stat-num"><span class="num counter" data-target="5">0</span><span class="unit">项</span></div>
+      <div class="stat-desc">权威资质认证</div>
+    </div>
+    <div class="stat-cell reveal reveal-d3">
+      <div class="stat-num"><span class="num counter" data-target="100">0</span><span class="unit">场+</span></div>
+      <div class="stat-desc">培训交付</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <span class="section-eyebrow reveal">ABOUT</span>
+    <h2 class="section-heading reveal reveal-d1">从管理咨询到 <em>AI实战</em></h2>
+    <div class="about-layout">
+      <div class="about-narrative">
+        <p class="reveal reveal-d2">
+          我是<span class="em">朱红印</span>，你可以叫我红印老师。曾深耕企业管理咨询二十余年，从品牌战略到组织管理，服务过众多企业。三年前，我敏锐地捕捉到AI浪潮的到来，开始系统学习和应用AI技术。
+        </p>
+        <p class="reveal reveal-d3">
+          如今，我担任<span class="em">河南恩久AI研究院副院长</span>、首席AI应用架构师，专注于将前沿AI技术转化为企业真正能用的工具和流程。我们是钉钉AI咨询研究院的<span class="em-cyan">河南独家授权商</span>，同时也是钉钉河南授权服务商。
+        </p>
+        <p class="reveal reveal-d4">
+          我不做空中楼阁式的"AI概念普及"，而是聚焦于让AI真正帮到每一个人——让AI成为你手中实实在在的提效利器。
+        </p>
+      </div>
+      <div class="about-traits">
+        <div class="trait-card reveal reveal-d2">
+          <span class="trait-icon">🎯</span>
+          <div class="trait-title">实战派</div>
+          <div class="trait-desc">每个方法论都源自真实项目验证，确保拿来就能用</div>
+        </div>
+        <div class="trait-card reveal reveal-d3">
+          <span class="trait-icon">🔗</span>
+          <div class="trait-title">跨界融合</div>
+          <div class="trait-desc">二十年管理咨询 × AI技术实战，从业务视角理解技术价值</div>
+        </div>
+        <div class="trait-card reveal reveal-d4">
+          <span class="trait-icon">🌱</span>
+          <div class="trait-title">生态共建</div>
+          <div class="trait-desc">发起AI讲师联盟，与商业讲师共学共创共享</div>
+        </div>
+        <div class="trait-card reveal reveal-d5">
+          <span class="trait-icon">🏛️</span>
+          <div class="trait-title">官方认证</div>
+          <div class="trait-desc">钉钉、千问办公、悟空AI三重认证讲师</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDENTIALS -->
+<section id="credentials">
+  <div class="container">
+    <span class="section-eyebrow reveal">CREDENTIALS</span>
+    <h2 class="section-heading reveal reveal-d1">专业 <span class="cyan-em">资质认证</span></h2>
+    <div class="cred-grid">
+      <div class="cred-chip reveal reveal-d1">
+        <div class="cred-icon gold-bg">🏅</div>
+        <span class="cred-label">钉钉AI咨询研究院 认证讲师</span>
+      </div>
+      <div class="cred-chip reveal reveal-d2">
+        <div class="cred-icon gold-bg">🏅</div>
+        <span class="cred-label">千问办公 Qwen Work 认证讲师</span>
+      </div>
+      <div class="cred-chip reveal reveal-d3">
+        <div class="cred-icon gold-bg">🏅</div>
+        <span class="cred-label">悟空AI部署工程师 认证讲师</span>
+      </div>
+      <div class="cred-chip reveal reveal-d4">
+        <div class="cred-icon cyan-bg">⚙️</div>
+        <span class="cred-label">钉钉认证 高级AI应用工程师</span>
+      </div>
+      <div class="cred-chip reveal reveal-d5">
+        <div class="cred-icon cyan-bg">📋</div>
+        <span class="cred-label">资深品牌战略管理咨询顾问</span>
+      </div>
+      <div class="cred-chip reveal reveal-d6">
+        <div class="cred-icon cyan-bg">📊</div>
+        <span class="cred-label">国企十五五战略规划专家</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <span class="section-eyebrow reveal">SERVICES</span>
+    <h2 class="section-heading reveal reveal-d1">核心 <em>服务</em></h2>
+    <div class="services-constellation">
+      <div class="service-island reveal reveal-d2">
+        <div class="island-icon">🎓</div>
+        <h3 class="island-title">AI培训与课程研发</h3>
+        <p class="island-desc">面向企业和个人的AI应用实战培训，涵盖钉钉AI、千问办公、Agent开发、知识库搭建等主流方向。课程以场景驱动，注重即学即用。</p>
+        <div class="island-tags">
+          <span class="island-tag">AI办公提效</span>
+          <span class="island-tag">Agent开发</span>
+          <span class="island-tag">钉钉AI</span>
+          <span class="island-tag">课程设计</span>
+        </div>
+      </div>
+      <div class="service-island reveal reveal-d3">
+        <div class="island-icon">🏗️</div>
+        <h3 class="island-title">企业AI转型咨询</h3>
+        <p class="island-desc">帮助企业制定AI转型战略，从组织架构到业务流程的AI化改造。提供轻量级AI应用落地方案，以最小成本获得最大收益。</p>
+        <div class="island-tags">
+          <span class="island-tag">战略规划</span>
+          <span class="island-tag">流程AI化</span>
+          <span class="island-tag">组织提效</span>
+          <span class="island-tag">落地陪跑</span>
+        </div>
+      </div>
+      <div class="service-island reveal reveal-d4">
+        <div class="island-icon">🤝</div>
+        <h3 class="island-title">讲师联盟与共创</h3>
+        <p class="island-desc">联合外部商业讲师共建AI讲师联盟，共学共创共享。合作方向包括爆款课程升级、成熟课程AI化改造、前沿工具实操应用。</p>
+        <div class="island-tags">
+          <span class="island-tag">联盟共建</span>
+          <span class="island-tag">课程共创</span>
+          <span class="island-tag">AI化改造</span>
+          <span class="island-tag">联合交付</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section id="audience">
+  <div class="container">
+    <span class="section-eyebrow reveal">AUDIENCE</span>
+    <h2 class="section-heading reveal reveal-d1">我的服务 <span class="cyan-em">对象</span></h2>
+    <div class="audience-orbit">
+      <div class="orbit-node reveal reveal-d1">
+        <span class="orbit-icon">💼</span>
+        <div class="orbit-name">咨询顾问</div>
+        <div class="orbit-hint">用AI提升咨询服务效率，打造差异化竞争力</div>
+      </div>
+      <div class="orbit-node reveal reveal-d2">
+        <span class="orbit-icon">🎤</span>
+        <div class="orbit-name">培训师</div>
+        <div class="orbit-hint">AI赋能课程研发与交付，拓展AI新课程方向</div>
+      </div>
+      <div class="orbit-node reveal reveal-d3">
+        <span class="orbit-icon">🏢</span>
+        <div class="orbit-name">企业管理者</div>
+        <div class="orbit-hint">理解AI战略价值，推动组织AI转型落地</div>
+      </div>
+      <div class="orbit-node reveal reveal-d4">
+        <span class="orbit-icon">🚀</span>
+        <div class="orbit-name">知识型创业者</div>
+        <div class="orbit-hint">用AI构建个人知识体系和内容生产力</div>
+      </div>
+      <div class="orbit-node reveal reveal-d5">
+        <span class="orbit-icon">👤</span>
+        <div class="orbit-name">OPC一人公司</div>
+        <div class="orbit-hint">AI打造超级个体，一个人就是一支队伍</div>
+      </div>
+      <div class="orbit-node reveal reveal-d6">
+        <span class="orbit-icon">👥</span>
+        <div class="orbit-name">OPT一人团队</div>
+        <div class="orbit-hint">AI构建虚拟团队，让小团队撬动大市场</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <span class="section-eyebrow reveal">MOMENTS</span>
+    <h2 class="section-heading reveal reveal-d1">工作与 <em>培训风采</em></h2>
+    <div class="gallery-mosaic">
+      <div class="gallery-tile reveal reveal-d1">
+        <img src="assets/scene1.jpg" alt="餐饮AI落地实战课">
+        <div class="gallery-caption"><span>餐饮AI落地实战课 · 杭州阿里总部</span></div>
+      </div>
+      <div class="gallery-tile reveal reveal-d2">
+        <img src="assets/scene2.jpg" alt="大河速递AI办公提效课">
+        <div class="gallery-caption"><span>大河速递AI办公提效实操课</span></div>
+      </div>
+      <div class="gallery-tile reveal reveal-d3">
+        <img src="assets/scene3.jpg" alt="企业AI培训现场">
+        <div class="gallery-caption"><span>企业AI培训现场授课</span></div>
+      </div>
+      <div class="gallery-tile reveal reveal-d4">
+        <img src="assets/scene4.jpg" alt="AI应用实操指导">
+        <div class="gallery-caption"><span>AI应用实操指导</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section id="philosophy">
+  <div class="philosophy-orb"></div>
+  <div class="container">
+    <span class="section-eyebrow reveal">PHILOSOPHY</span>
+    <blockquote class="philosophy-quote reveal reveal-d1">
+      <span class="quote-text">AI不是取代你，而是让你变得更强。<br>学会用好AI，做自己的超级个体。</span>
+    </blockquote>
+    <p class="philosophy-sub reveal reveal-d2">无论你是想提升个人效率，还是推动企业AI转型，我都可以帮你找到最短路径。</p>
+    <div class="cta-row reveal reveal-d3">
+      <a href="#hero" class="btn-gold">开始对话 →</a>
+      <a href="#services" class="btn-ghost">查看服务详情</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <span class="f-brand">朱红印</span> · 河南恩久AI研究院 · All Rights Reserved</p>
+</footer>
+
+<!-- JAVASCRIPT -->
+<script>
+// Atmospheric Particle System
+(function() {
+  const canvas = document.getElementById('atmosphere');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles, mouse;
+  const COUNT = 55;
+  const LINK_DIST = 140;
+
+  function init() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    mouse = { x: w * 0.5, y: h * 0.5 };
+    particles = [];
+
+    for (let i = 0; i < COUNT; i++) {
+      const type = Math.random();
+      let color, r;
+      if (type < 0.4) {
+        color = `rgba(232,196,90,${0.2 + Math.random() * 0.3})`;
+        r = Math.random() * 1.8 + 0.4;
+      } else if (type < 0.7) {
+        color = `rgba(92,216,232,${0.15 + Math.random() * 0.25})`;
+        r = Math.random() * 1.5 + 0.3;
+      } else {
+        color = `rgba(200,210,230,${0.08 + Math.random() * 0.15})`;
+        r = Math.random() * 1.2 + 0.3;
+      }
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        r, color,
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: 0.005 + Math.random() * 0.01
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (let p of particles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < -10) p.x = w + 10;
+      if (p.x > w + 10) p.x = -10;
+      if (p.y < -10) p.y = h + 10;
+      if (p.y > h + 10) p.y = -10;
+
+      const dx = p.x - mouse.x;
+      const dy = p.y - mouse.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 150) {
+        const f = (150 - dist) / 150 * 0.008;
+        p.vx += dx * f;
+        p.vy += dy * f;
+      }
+
+      const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+      if (spd > 1) { p.vx *= 0.97; p.vy *= 0.97; }
+
+      p.pulse += p.pulseSpeed;
+      const pr = p.r + Math.sin(p.pulse) * 0.3;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, Math.max(pr, 0.2), 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+    }
+
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < LINK_DIST) {
+          const alpha = (1 - d / LINK_DIST) * 0.08;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(232,196,90,${alpha})`;
+          ctx.lineWidth = 0.4;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', init);
+  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  init();
+  draw();
+})();
+
+// Navbar
+const navbar = document.getElementById('navbar');
+const allSections = document.querySelectorAll('section[id]');
+const allNavLinks = document.querySelectorAll('.nav-links a');
+
+window.addEventListener('scroll', () => {
+  const sy = window.scrollY;
+  navbar.classList.toggle('scrolled', sy > 60);
+  let cur = '';
+  allSections.forEach(s => { if (sy >= s.offsetTop - 120) cur = s.id; });
+  allNavLinks.forEach(l => { l.classList.toggle('active', l.getAttribute('href') === '#' + cur); });
+});
+
+function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
+document.querySelectorAll('.nav-links a').forEach(l => {
+  l.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+});
+
+// Scroll Reveal
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// Counter
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const target = +el.dataset.target;
+    let cur = 0;
+    const step = target / 50;
+    const timer = setInterval(() => {
+      cur += step;
+      if (cur >= target) { cur = target; clearInterval(timer); }
+      el.textContent = Math.floor(cur);
+    }, 30);
+    counterObs.unobserve(el);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
+
+// Smooth Scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    const t = document.querySelector(this.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+
+</body>
+</html>
